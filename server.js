@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 4011;
@@ -19,12 +20,9 @@ db.once('open', (  ) => console.log("/// ----> MongoDB ready! "))
 
 // ---- APP
 // ------------------------------------------
-
 app.use( express.json() ); // Handle JSON data
 app.use( express.urlencoded( { extended: true } ) ) // Handle URLEncoded data
-
-
-
+app.use( cors( { credentials: true, origin: true } ) )
 
 // ---- SESSION
 // ------------------------------------------
