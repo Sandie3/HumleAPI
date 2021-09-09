@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 4011;
 const mg = require('mongoose');
 
 // Local DB
+// mg.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+// External DB
 mg.connect(process.env.DB_URL_EXT, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mg.connection; // Connect to DB
