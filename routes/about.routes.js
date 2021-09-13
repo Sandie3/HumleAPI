@@ -36,7 +36,7 @@ router.get( '/', async ( req, res ) => {
 // ADMIN
 // ---- EDIT DATA
 // -----------------------------------
-router.put( '/', async ( req, res ) => {
+router.put( '/admin/', async ( req, res ) => {
 
     console.log( 'PUT about' )
 
