@@ -81,7 +81,7 @@ app.get( '/', async ( req, res ) => {
 app.use( '/about', require( './routes/about.routes' ) )
 app.use( '/user', require( './routes/user.routes' ) )
 app.use( '/login', require( './routes/login.routes' ) )
-app.use( '/product', require( './routes/product.routes' ) )
+app.use( '/products', require( './routes/product.routes' ) )
 
 
 

@@ -3,6 +3,8 @@ const Product = require( '../models/product.model' )
 const express = require( 'express' );
 const router = express.Router();
 
+const fs = require( 'fs' )
+
 // Handle files ( Images or whatever )
 const multer = require( 'multer' )
 
@@ -125,7 +127,7 @@ router.post( '/admin', upload.single( 'image' ), async ( req, res ) => {
         let product = new Product( req.body )
         product.image = req.file.filename
         // product.image = req.file ? req.file.filename : 'noimage.jpg'
-        product.save()
+        product = await product.save()
 
         res.status( 200 ).json( { message: 'New product is created', created: product } )
 
@@ -144,12 +146,17 @@ router.put( '/admin/:id', upload.single( 'image' ), async ( req, res ) => {
 
     try {
 
-        if (req.file) {
+        if ( req.file ) {
             // replace old image name with new image name
             req.body.image = req.file.filename
 
             // If you want to delete image/file
-            // const 
+            const oldProduct = await Product.find( req.params.id )
+            fs.unlink( './public/images/' + oldProduct.image, ( err ) => {
+                if ( err ) throw err;
+                console.log( 'Image deleted' )
+            } )
+
         }
 
         let product = await Product.findByIdAndUpdate( { _id: req.params.id }, req.body, { new: true } )
@@ -170,6 +177,12 @@ router.delete( '/admin/:id', async ( req, res ) => {
     console.log( 'DELETE product from ID' )
 
     try {
+
+        const oldProduct = await Product.findById( req.params.id )
+        fs.unlink( './public/images/' + oldProduct.image, ( err ) => {
+            if ( err ) throw err;
+            console.log( 'Image deleted' )
+        } )
 
         await Product.findByIdAndDelete( req.params.id ); // Find by ID
 
